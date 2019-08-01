@@ -13,5 +13,8 @@ find_package(OpenCV REQUIRED)
 find_package(X11 REQUIRED)
 
 include_directories(${X11_INCLUDE_DIR})
+
+add_subdirectory(core)
+
 add_executable(${PROJECT_NAME} ${SRC})
 target_link_libraries(${PROJECT_NAME} ${OpenCV_LIBS} ${X11_LIBRARIES})
