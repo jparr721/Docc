@@ -93,14 +93,14 @@ def read_modules(source_dir: str):
 
 
 def main():
-    LOGGER.info("Creating new doc file")
-    open("doc.md", "a").close()
-
     args = parse_args()
 
     if len(argv) < 2:
         print("Invalid ops specified, use --help if you're stuck")
         return
+
+    LOGGER.info("Creating new doc file")
+    open("doc.md", "a").close()
 
     if args.excludes:
         ls = [value for value in args.excludes.split(",") if value is not None]
