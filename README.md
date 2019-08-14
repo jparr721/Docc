@@ -25,5 +25,5 @@ optional arguments:
 I'll add a setup.py file eventually, for now, here's an example:
 
 ```
-python3 docc.py --dir Cuttlefish/ --excludes .git,venv,updater.py,dist,cuttlefish_lib.egg-info,test
+python3 docc.py --dir DIR_HERE/ --excludes .git,venv,updater.py,dist,test
 ```
