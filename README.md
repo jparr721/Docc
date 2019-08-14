@@ -6,6 +6,9 @@
 
 Use this, it is better than other garbage, why? Because it's simple, and it WORKS out of the box.
 
+## Does it work well?
+Probably.
+
 ## Usage:
 ```
 usage: docc.py [-h] [--dir DIR] [--excludes EXCLUDES] {fuckyou,fu} ...
