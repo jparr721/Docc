@@ -8,8 +8,8 @@ def read(fname):
 
 setup(
     name="docc",
-    version="1.0.0",
-    scripts=["bin/docc.py"],
+    version="2.0.0",
+    scripts=["bin/docc"],
     author="Jarred Parr",
     description="Docs that aren't trash",
     long_description=read("README.md")

@@ -1,7 +1,9 @@
+#!/usr/bin/env python
+
 import argparse
 import ast
 import logging
-from os import walk
+from os import walk, path
 from pathlib import Path
 from sys import argv, exit
 
@@ -13,12 +15,13 @@ NAUGHTY_BOYS = {".git", "venv", "__pycache__"}  # Exluded dirs
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Doc generators are shit, use this, it isn't."
-    )
+        description="Doc generators are shit, use this, it isn't.")
 
-    parser.add_argument(
-        "--dir", type=Path, help="If you need to specify a spicy dir"
-    )
+    parser.add_argument("--dir",
+                        type=Path,
+                        help="If you need to specify a spicy dir")
+
+    parser.add_argument("--file", type=Path, help="Specify a path to parse")
 
     parser.add_argument(
         "--excludes",
@@ -26,16 +29,7 @@ def parse_args() -> argparse.Namespace:
         help="do,it,like,this,it,can,be,a,dir,or,a,file",
     )
 
-    subparsers = parser.add_subparsers(dest="cmd")
-
-    fucc_yu = subparsers.add_parser("fuckyou", aliases=["fu"], help="No")
-    fucc_yu.set_defaults(cmd=fuckyou)
-
     return parser.parse_args()
-
-
-def fuckyou(args: argparse.Namespace):
-    print("No, fuck YOU")
 
 
 def read_functions(functions, f, starter="Function"):
@@ -75,17 +69,27 @@ def read_dir(dir_name: str):
         if not any(x in dir_name for x in NAUGHTY_BOYS):
             LOGGER.info(f"Found directory: {dir_name}")
             for f_name in file_list:
-                if (
-                    f_name.endswith(".py")
-                    and not f_name.startswith("_")
-                    and not any(x in f_name for x in NAUGHTY_BOYS)
-                ):
+                if (f_name.endswith(".py") and not f_name.startswith("_")
+                        and not any(x in f_name for x in NAUGHTY_BOYS)):
                     f = open("doc.md", "a+")
                     f.write(f"## {f_name}\n")
                     f_name = f"{dir_name}/{f_name}"
                     LOGGER.info(f"\t\tFound file: {f_name}")
                     with open(f_name) as f:
                         get_info(ast.parse(f.read()))
+
+
+def read_file(file_name: str):
+    f = open("doc.md", "a+")
+    f.write(f"## {file_name}\n")
+    f.close()
+    if path.exists(file_name):
+        LOGGER.info(f"\t\tFound file: {file_name}")
+    else:
+        print("File does not exist, bye!")
+        exit(1)
+    with open(file_name) as ff:
+        get_info(ast.parse(ff.read()))
 
 
 def read_modules(source_dir: str):
@@ -114,6 +118,9 @@ def main():
         default_dir = args.dir
 
         return read_modules(default_dir)
+
+    if args.file:
+        read_file(args.file)
 
     return read_modules(default_dir)
 
