@@ -8,7 +8,7 @@ def read(fname):
 
 setup(
     name="docc",
-    version="2.0.0",
+    version="2.0.1",
     scripts=["bin/docc"],
     author="Jarred Parr",
     description="Docs that aren't trash",

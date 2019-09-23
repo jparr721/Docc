@@ -110,9 +110,6 @@ def main():
         ls = [value for value in args.excludes.split(",") if value is not None]
         NAUGHTY_BOYS.update(ls)
 
-    if args.cmd:
-        return args.cmd(args)
-
     default_dir = Path.cwd() / argv[1]
     if args.dir:
         default_dir = args.dir
